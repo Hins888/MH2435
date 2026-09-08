@@ -1,0 +1,39 @@
+#include "mh2435.h"
+#include "stdio.h"
+#include "usart.h"
+#include "sdio.h"
+#include "sdio_sd.h"
+
+int main(void)
+{
+	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_3);
+
+	USART_Configuration();
+	printf(">>SDIO Demo v1.0\n");
+	
+	ClockEnable(ClockNodePLL3G, true);
+	ClockSelect(ClockNodeSDIO, ClockNodeREF);
+	SD_Test();
+	
+	while(1);
+}
+
+
+#ifdef  USE_FULL_ASSERT
+/**
+  * @brief  Reports the name of the source file and the source line number
+  *         where the assert_param error has occurred.
+  * @param  file: pointer to the source file name
+  * @param  line: assert_param error line source number
+  * @retval None
+  */
+void assert_failed(uint8_t* file, uint32_t line)
+{
+  /* User can add his own implementation to report the file name and line number,
+     ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+
+  /* Infinite loop */
+  while (1)
+  {}
+}
+#endif
